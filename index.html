@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Example with three.js</title>
+</head>
+<body>
+    <script src="./js/three.js"></script>
+    <script>
+        const scene = new THREE.Scene(); //Building scene
+        /*scene.background = new THREE.Color(0x666666);   Background color*/
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000); //Camera
+        //Object for rendering
+        const renderer = new THREE.WebGLRenderer({alpha: true}); //Render object alpha is for transparense
+        renderer.setSize(window.innerWidth, window.innerHeight); //Object size
+        document.body.appendChild(renderer.domElement); ///Element for rendering
+
+        //GEOMETRY-MATERIALS-ANIMATIONS
+
+        var geometry = new THREE.BoxGeometry(1, 1, 1);
+        var material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
+        var cube = new THREE.Mesh(geometry, material);
+        cube.castShadow = true;
+        cube.position.set(1,2,1);
+        cube.castShadow = true
+        scene.add(cube);
+
+        // Light
+        var light = new THREE.DirectionalLight(0xffffff, 1, 10); //Light color
+        light.position.set(-1, 1, 1); //Light Position
+        light.castShadow = true; //Add shadow
+        scene.add(light);//Add
+
+        // Plane
+        var planeGeometry = new THREE.PlaneGeometry(20, 20, 32, 32);
+        var planeMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+        var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+        plane.receiveShadow = true;
+        plane.position.set(0, 0, 0);
+        scene.add(plane);
+
+
+        //Position camera
+        camera.position.z = 4;
+        camera.position.y = -1;
+        camera.rotation.x = -5.5;
+
+
+        //Animation scene
+        function animate(){
+            requestAnimationFrame(animate);
+            cube.rotation.x += 0.01;
+            cube.rotation.y +=0.01;
+            renderer.render(scene, camera);
+        }
+        animate();
+
+    </script>
+</body>
+</html>
